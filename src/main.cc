@@ -42,7 +42,7 @@ int main(int argc, char* argv[]) {
 
 
 	DLC colors;
-	colors.Test();
+	colors.Michel_levy();
 	
 	
 	return 0;

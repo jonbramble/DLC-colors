@@ -11,17 +11,17 @@ ACLOCAL_AMFLAGS = ${ACLOCAL_FLAGS}
 
 ## Define an executable target "hello", which will be installed into the
 ## directory named by the predefined variable $(bindir).
-bin_PROGRAMS = DLC-colors
+bin_PROGRAMS = DLC_colors
 
-#AM_CPPFLAGS = $(GSL_CFLAGS) #$(OMP_OPTS)
-#DLC_LDADD = $(GSL_LIBS) $(CIMG_LIBS) $(TIFF_LIBS) #$(OMP_OPTS)
+AM_CPPFLAGS = $(GSL_CFLAGS) #$(OMP_OPTS)
+DLC_colors_LDADD = $(GSL_LIBS) $(CIMG_LIBS) $(TIFF_LIBS) #$(OMP_OPTS)
 
 ## Define the list of source files for the "hello" target. The file extension
 ## .cc is recognized by Automake, and causes it to produce rules which invoke
 ## the C++ compiler to produce an object file (.o) from each source file. The
 ## header files (.h) do not result in object files by themselves, but will be
 ## included in distribution archives of the project.
-DLC_colors_SOURCES = include/DLC_colors.h src/main.cc src/DLC-colors.cc 
+DLC_colors_SOURCES = include/DLC_colors.h src/main.cc src/DLC_colors.cc 
 
 ## Define an independent executable script for inclusion in the distribution
 ## archive. It will not be installed on an end user's system, however.

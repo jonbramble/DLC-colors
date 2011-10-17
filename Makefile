@@ -16,10 +16,10 @@
 
 
 
-pkgdatadir = $(datadir)/DLC-colors
-pkgincludedir = $(includedir)/DLC-colors
-pkglibdir = $(libdir)/DLC-colors
-pkglibexecdir = $(libexecdir)/DLC-colors
+pkgdatadir = $(datadir)/DLC_colors
+pkgincludedir = $(includedir)/DLC_colors
+pkglibdir = $(libdir)/DLC_colors
+pkglibexecdir = $(libexecdir)/DLC_colors
 am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
 install_sh_DATA = $(install_sh) -c -m 644
 install_sh_PROGRAM = $(install_sh) -c
@@ -32,7 +32,7 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-bin_PROGRAMS = DLC-colors$(EXEEXT)
+bin_PROGRAMS = DLC_colors$(EXEEXT)
 subdir = .
 DIST_COMMON = README $(am__configure_deps) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(srcdir)/config.h.in \
@@ -51,9 +51,10 @@ CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am__dirstamp = $(am__leading_dot)dirstamp
-am_DLC_colors_OBJECTS = src/main.$(OBJEXT) src/DLC-colors.$(OBJEXT)
+am_DLC_colors_OBJECTS = src/main.$(OBJEXT) src/DLC_colors.$(OBJEXT)
 DLC_colors_OBJECTS = $(am_DLC_colors_OBJECTS)
-DLC_colors_LDADD = $(LDADD)
+am__DEPENDENCIES_1 =
+DLC_colors_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
 DEFAULT_INCLUDES = -I.
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -82,12 +83,16 @@ DIST_ARCHIVES = $(distdir).tar.gz
 GZIP_ENV = --best
 distuninstallcheck_listfiles = find . -type f -print
 distcleancheck_listfiles = find . -type f -print
-ACLOCAL = ${SHELL} /home/DS/phyjpb/Programming/C/DLC-colors/missing --run aclocal-1.11
-AMTAR = ${SHELL} /home/DS/phyjpb/Programming/C/DLC-colors/missing --run tar
-AUTOCONF = ${SHELL} /home/DS/phyjpb/Programming/C/DLC-colors/missing --run autoconf
-AUTOHEADER = ${SHELL} /home/DS/phyjpb/Programming/C/DLC-colors/missing --run autoheader
-AUTOMAKE = ${SHELL} /home/DS/phyjpb/Programming/C/DLC-colors/missing --run automake-1.11
-AWK = gawk
+ACLOCAL = ${SHELL} /home/jon/Programming/C/DLC-colors/missing --run aclocal-1.11
+AMTAR = ${SHELL} /home/jon/Programming/C/DLC-colors/missing --run tar
+AUTOCONF = ${SHELL} /home/jon/Programming/C/DLC-colors/missing --run autoconf
+AUTOHEADER = ${SHELL} /home/jon/Programming/C/DLC-colors/missing --run autoheader
+AUTOMAKE = ${SHELL} /home/jon/Programming/C/DLC-colors/missing --run automake-1.11
+AWK = mawk
+CC = gcc
+CCDEPMODE = depmode=gcc3
+CFLAGS = -g -O2
+CIMG_LIBS = -L/usr/X11R6/lib -lpthread -lX11
 CPPFLAGS = 
 CXX = g++
 CXXDEPMODE = depmode=gcc3
@@ -99,6 +104,9 @@ ECHO_C =
 ECHO_N = -n
 ECHO_T = 
 EXEEXT = 
+GSL_CFLAGS = -I/usr/include
+GSL_CONFIG = /usr/bin/gsl-config
+GSL_LIBS = -L/usr/lib -lgsl -lgslcblas -lm
 INSTALL = /usr/bin/install -c
 INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
@@ -108,14 +116,14 @@ LDFLAGS =
 LIBOBJS = 
 LIBS = 
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /home/DS/phyjpb/Programming/C/DLC-colors/missing --run makeinfo
+MAKEINFO = ${SHELL} /home/jon/Programming/C/DLC-colors/missing --run makeinfo
 MKDIR_P = /bin/mkdir -p
 OBJEXT = o
-PACKAGE = DLC-colors
+PACKAGE = DLC_colors
 PACKAGE_BUGREPORT = phyjpb@leeds.ac.uk
-PACKAGE_NAME = DLC-colors
-PACKAGE_STRING = DLC-colors 0.1
-PACKAGE_TARNAME = DLC-colors
+PACKAGE_NAME = DLC_colors
+PACKAGE_STRING = DLC_colors 0.1
+PACKAGE_TARNAME = DLC_colors
 PACKAGE_URL = http://mpi.leeds.ac.uk/
 PACKAGE_VERSION = 0.1
 PATH_SEPARATOR = :
@@ -123,10 +131,11 @@ SET_MAKE =
 SHELL = /bin/bash
 STRIP = 
 VERSION = 0.1
-abs_builddir = /home/DS/phyjpb/Programming/C/DLC-colors
-abs_srcdir = /home/DS/phyjpb/Programming/C/DLC-colors
-abs_top_builddir = /home/DS/phyjpb/Programming/C/DLC-colors
-abs_top_srcdir = /home/DS/phyjpb/Programming/C/DLC-colors
+abs_builddir = /home/jon/Programming/C/DLC-colors
+abs_srcdir = /home/jon/Programming/C/DLC-colors
+abs_top_builddir = /home/jon/Programming/C/DLC-colors
+abs_top_srcdir = /home/jon/Programming/C/DLC-colors
+ac_ct_CC = gcc
 ac_ct_CXX = g++
 am__include = include
 am__leading_dot = .
@@ -145,7 +154,7 @@ host_alias =
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /home/DS/phyjpb/Programming/C/DLC-colors/install-sh
+install_sh = ${SHELL} /home/jon/Programming/C/DLC-colors/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -167,10 +176,9 @@ top_builddir = .
 top_srcdir = .
 AUTOMAKE_OPTIONS = subdir-objects
 ACLOCAL_AMFLAGS = ${ACLOCAL_FLAGS}
-
-#AM_CPPFLAGS = $(GSL_CFLAGS) #$(OMP_OPTS)
-#DLC_LDADD = $(GSL_LIBS) $(CIMG_LIBS) $(TIFF_LIBS) #$(OMP_OPTS)
-DLC_colors_SOURCES = include/DLC_colors.h src/main.cc src/DLC-colors.cc 
+AM_CPPFLAGS = $(GSL_CFLAGS) #$(OMP_OPTS)
+DLC_colors_LDADD = $(GSL_LIBS) $(CIMG_LIBS) $(TIFF_LIBS) #$(OMP_OPTS)
+DLC_colors_SOURCES = include/DLC_colors.h src/main.cc src/DLC_colors.cc 
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
 
@@ -271,21 +279,21 @@ src/$(DEPDIR)/$(am__dirstamp):
 	@$(MKDIR_P) src/$(DEPDIR)
 	@: > src/$(DEPDIR)/$(am__dirstamp)
 src/main.$(OBJEXT): src/$(am__dirstamp) src/$(DEPDIR)/$(am__dirstamp)
-src/DLC-colors.$(OBJEXT): src/$(am__dirstamp) \
+src/DLC_colors.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
-DLC-colors$(EXEEXT): $(DLC_colors_OBJECTS) $(DLC_colors_DEPENDENCIES) 
-	@rm -f DLC-colors$(EXEEXT)
+DLC_colors$(EXEEXT): $(DLC_colors_OBJECTS) $(DLC_colors_DEPENDENCIES) 
+	@rm -f DLC_colors$(EXEEXT)
 	$(CXXLINK) $(DLC_colors_OBJECTS) $(DLC_colors_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
-	-rm -f src/DLC-colors.$(OBJEXT)
+	-rm -f src/DLC_colors.$(OBJEXT)
 	-rm -f src/main.$(OBJEXT)
 
 distclean-compile:
 	-rm -f *.tab.c
 
-include src/$(DEPDIR)/DLC-colors.Po
+include src/$(DEPDIR)/DLC_colors.Po
 include src/$(DEPDIR)/main.Po
 
 .cc.o:

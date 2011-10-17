@@ -32,7 +32,7 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-bin_PROGRAMS = DLC-colors$(EXEEXT)
+bin_PROGRAMS = DLC_colors$(EXEEXT)
 subdir = .
 DIST_COMMON = README $(am__configure_deps) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(srcdir)/config.h.in \
@@ -51,9 +51,10 @@ CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am__dirstamp = $(am__leading_dot)dirstamp
-am_DLC_colors_OBJECTS = src/main.$(OBJEXT) src/DLC-colors.$(OBJEXT)
+am_DLC_colors_OBJECTS = src/main.$(OBJEXT) src/DLC_colors.$(OBJEXT)
 DLC_colors_OBJECTS = $(am_DLC_colors_OBJECTS)
-DLC_colors_LDADD = $(LDADD)
+am__DEPENDENCIES_1 =
+DLC_colors_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -88,6 +89,10 @@ AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
 AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
+CC = @CC@
+CCDEPMODE = @CCDEPMODE@
+CFLAGS = @CFLAGS@
+CIMG_LIBS = @CIMG_LIBS@
 CPPFLAGS = @CPPFLAGS@
 CXX = @CXX@
 CXXDEPMODE = @CXXDEPMODE@
@@ -99,6 +104,9 @@ ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 EXEEXT = @EXEEXT@
+GSL_CFLAGS = @GSL_CFLAGS@
+GSL_CONFIG = @GSL_CONFIG@
+GSL_LIBS = @GSL_LIBS@
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
@@ -127,6 +135,7 @@ abs_builddir = @abs_builddir@
 abs_srcdir = @abs_srcdir@
 abs_top_builddir = @abs_top_builddir@
 abs_top_srcdir = @abs_top_srcdir@
+ac_ct_CC = @ac_ct_CC@
 ac_ct_CXX = @ac_ct_CXX@
 am__include = @am__include@
 am__leading_dot = @am__leading_dot@
@@ -167,10 +176,9 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AUTOMAKE_OPTIONS = subdir-objects
 ACLOCAL_AMFLAGS = ${ACLOCAL_FLAGS}
-
-#AM_CPPFLAGS = $(GSL_CFLAGS) #$(OMP_OPTS)
-#DLC_LDADD = $(GSL_LIBS) $(CIMG_LIBS) $(TIFF_LIBS) #$(OMP_OPTS)
-DLC_colors_SOURCES = include/DLC_colors.h src/main.cc src/DLC-colors.cc 
+AM_CPPFLAGS = $(GSL_CFLAGS) #$(OMP_OPTS)
+DLC_colors_LDADD = $(GSL_LIBS) $(CIMG_LIBS) $(TIFF_LIBS) #$(OMP_OPTS)
+DLC_colors_SOURCES = include/DLC_colors.h src/main.cc src/DLC_colors.cc 
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
 
@@ -271,21 +279,21 @@ src/$(DEPDIR)/$(am__dirstamp):
 	@$(MKDIR_P) src/$(DEPDIR)
 	@: > src/$(DEPDIR)/$(am__dirstamp)
 src/main.$(OBJEXT): src/$(am__dirstamp) src/$(DEPDIR)/$(am__dirstamp)
-src/DLC-colors.$(OBJEXT): src/$(am__dirstamp) \
+src/DLC_colors.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
-DLC-colors$(EXEEXT): $(DLC_colors_OBJECTS) $(DLC_colors_DEPENDENCIES) 
-	@rm -f DLC-colors$(EXEEXT)
+DLC_colors$(EXEEXT): $(DLC_colors_OBJECTS) $(DLC_colors_DEPENDENCIES) 
+	@rm -f DLC_colors$(EXEEXT)
 	$(CXXLINK) $(DLC_colors_OBJECTS) $(DLC_colors_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
-	-rm -f src/DLC-colors.$(OBJEXT)
+	-rm -f src/DLC_colors.$(OBJEXT)
 	-rm -f src/main.$(OBJEXT)
 
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/DLC-colors.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/DLC_colors.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/main.Po@am__quote@
 
 .cc.o:

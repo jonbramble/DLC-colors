@@ -7,7 +7,7 @@
 class DLC
 {
 public:
-    void Test();
+    void Michel_levy();
 };
 
 #endif

@@ -1,13 +1,15 @@
 #ifndef DLC_colors_H
 #define DLC_colors_H
 
+
+
 #include <iostream>
 #include <string>
 
 class DLC
 {
 public:
-    void Test();
+    void Michel_levy();
 };
 
-#endif //DEF_DLC-colors_HELLO_H
+#endif
