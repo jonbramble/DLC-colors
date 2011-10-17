@@ -1,0 +1,13 @@
+#ifndef DLC-colors_H
+#define DLC-colors_H
+
+#include <iostream>
+#include <string>
+
+class DLC
+{
+public:
+    void Test();
+};
+
+#endif //DEF_DLC-colors_HELLO_H

@@ -1,0 +1,11 @@
+#include "DLC_colors.h"
+
+void DLC::Test()
+{
+	 //Helloworld:
+    std::string strTemp = "Hello World\n";
+    std::cout << strTemp;
+
+    std::cout << "\n";
+
+} 
