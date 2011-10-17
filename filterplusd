@@ -1,0 +1,129 @@
+
+clear all;
+[lambda, xm, ym, zm] = colorMatchFcn('1931_FULL');
+rho = linspace(-45,45,90).*pi/180;
+%rho = 45*pi/180;
+m=4;
+
+lambda0 = 528;
+A = [0;1];
+P = [1,0;0,0];
+
+Dn = 0.11;
+d = linspace(100,6000,500);
+
+rgb=zeros(length(rho),length(d),3);
+
+for r = 1:length(rho)
+    for dc = 1:length(d)
+        for l = 1:length(lambda)
+            
+            DeltaComp = (m*pi*lambda0/(lambda(l)));         %an approximation for the compensator!
+            DeltaSamp = 2*pi*Dn*d(dc)/lambda(l);            % thickness goes here
+            
+            
+            Comp = [cos(DeltaComp/2),1i*sin(DeltaComp/2);1i*sin(DeltaComp/2),cos(DeltaComp/2)];
+            Sample = [exp(1i*(DeltaSamp/2))*cos(rho(r))^2+exp(1i*(-DeltaSamp/2))*sin(rho(r))^2,2*1i*sin(rho(r))*cos(rho(r))*sin(DeltaSamp/2);2*1i*sin(rho(r))*cos(rho(r))*sin(DeltaSamp/2),exp(1i*(-DeltaSamp/2))*cos(rho(r))^2+exp(1i*(DeltaSamp/2))*sin(rho(r))^2];
+            Reflec = [-exp(1i*pi),0;0,-exp(1i*pi)];
+            
+            %E = P*Sample*A;
+            E = P*Sample*Reflec*Sample*A;
+            
+            Ts = E'*E;
+            
+            T(l) = Ts; % generate the spectra  
+        end
+        
+        %calculate the Xr,Yr,Zr values from the spectra using color
+        %matching functions from CIE1931
+       
+        Xr = xm.*T;
+        Yr = ym.*T;
+        Zr = zm.*T;
+        
+        Len = length(Xr);
+        
+        %replaces integral with trapezium method
+        X = sum(Xr)-Xr(Len)/2-Xr(1)/2;
+        Y = sum(Yr)-Yr(Len)/2-Yr(1)/2;
+        Z = sum(Zr)-Zr(Len)/2-Zr(1)/2;
+        
+        Norm = X+Y+Z;
+ 
+        %calculate the normalised color coordinates
+        Xn = X/Norm;
+        Yn = Y/Norm;
+        Zn = Z/Norm;
+        
+        %xydat(r,:) = [Xn,Yn];
+        rgb(r,dc,:) = colorspace('XYZ->RGB',cat(3,Xn,Yn,Zn));
+   end 
+end
+
+%hold off
+figure
+image(d,rho*180/pi,rgb)
+xlabel('Thickness (nm)')
+
+ylabel('Rotation Angle (^\circ)')
+
+%figure
+%surf(lambda,rho,T)
+%shading interp
+%colormap jet
+%view([90 90])
+
+% for r = 1:length(d)
+% 
+%     Xr = xm.*T(r,:);
+%     Yr = ym.*T(r,:);
+%     Zr = zm.*T(r,:);
+%     
+%     Len = length(Xr);
+% 
+%     X = sum(Xr)-Xr(Len)/2-Xr(1)/2;
+%     Y = sum(Yr)-Yr(Len)/2-Yr(1)/2;
+%     Z = sum(Zr)-Zr(Len)/2-Zr(1)/2;
+% 
+%     Norm = X+Y+Z;
+% 
+%     Xn = X/Norm;
+%     Yn = Y/Norm;
+%     Zn = Z/Norm;
+%     
+%     xydat(r,:) = [Xn,Yn];
+%     rgb(1,r,:) = colorspace('XYZ->RGB',cat(3,Xn,Yn,Zn));
+% 
+% end
+% 
+% colorspace_ciedemo
+% hold on
+% plot(xydat(:,1),xydat(:,2))
+% 
+% rpx = 0.64;
+% rpy = 0.32;
+% 
+% gpx = 0.30;
+% gpy = 0.60;
+% 
+% bpx = 0.15;
+% bpy = 0.06;
+% 
+% rbx = [rpx,bpx];
+% rby = [rpy,bpy];
+% bgx = [bpx,gpx];
+% bgy = [bpy,gpy];
+% grx = [gpx,rpx];
+% gry = [gpy,rpy];
+
+% line(rbx,rby,'Color','k');
+% line(bgx,bgy,'Color','k');
+% line(grx,gry,'Color','k');
+%line(bp,rp,'Color','k');
+
+%hold off
+
+% figure
+% image(d,rgb)
+    
+    
