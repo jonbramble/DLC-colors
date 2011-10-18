@@ -72,18 +72,16 @@ int main(int argc, char* argv[]) {
 			Y = gsl_matrix_get(Ymat,dc,yp);
 			Z = gsl_matrix_get(Zmat,dc,yp);
 			
-			const double origin = img(0,0,0,0);
-			img(1,0,0,0) = origin;
-			//image(dc,yp,0,0)=0.9;		// seg fault here 
-			//image(dc,yp,0,1)=gsl_matrix_get(Ymat,dc,yp);
-			//image(dc,yp,0,2)=gsl_matrix_get(Zmat,dc,yp);
+			img.set_linear_atXY(X,dc,yp,0,0,true);
+			img.set_linear_atXY(Y,dc,yp,0,1,true);
+			img.set_linear_atXY(Z,dc,yp,0,2,true);
 		}
 	}
 
-	//CImgDisplay main_disp(image.XYZtoRGB());
-	//while (!main_disp.is_closed()) {
-      	//	main_disp.wait();
-	//}
+	CImgDisplay main_disp(img.XYZtoRGB());
+	while (!main_disp.is_closed()) {
+      		main_disp.wait();
+	}
 	
 
 	gsl_matrix_free(Xmat);

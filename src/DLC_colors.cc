@@ -157,9 +157,9 @@ void DLC::Michel_levy(double Dn, int dlen, int dstart, int dend, gsl_matrix * Xm
 
 		for(yp=0;yp<ypix;yp++) //will loop on rho for this
 		{
-			gsl_matrix_set(Xmat,dc,yp,X);
-			gsl_matrix_set(Ymat,dc,yp,Y);
-			gsl_matrix_set(Zmat,dc,yp,Z);	
+			gsl_matrix_set(Xmat,dc,yp,Xn);
+			gsl_matrix_set(Ymat,dc,yp,Yn);
+			gsl_matrix_set(Zmat,dc,yp,Zn);	
 		}
 	
 	//printf("R%g G%g B%g\n",gsl_vector_get(RGB,0),gsl_vector_get(RGB,1),gsl_vector_get(RGB,2));
