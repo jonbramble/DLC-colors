@@ -1,14 +1,15 @@
 #include "../include/DLC_colors.h"
 
-void DLC::Michel_levy()
+void DLC::Michel_levy(double Dn, int dlen, int dstart, int dend, gsl_matrix * Xmat, gsl_matrix * Ymat, gsl_matrix * Zmat)
 {
 	const int len = 471; // data length defined by cie data
-	const int dlen = 500; // number of points in thickness
-	const int dstart = 100;
-	const int dend = 5000;
+	//const int dlen = 1000; // number of points in thickness
+	//const int dstart = 0;
+	//const int dend = 15000;
+	const int ypix=100;
+	int yp;
 
  	double dstep, X, Y, Z, Xn, Yn, Zn, Norm, DeltaComp, DeltaSamp, cDC2, sDC2, cDS2, sDS2, crho, srho, Ts, xmi, ymi, zmi, R, G, B;
-	const double Dn = 0.11;
 	const double lambda0 = 528;
 	const int m = 4;
 
@@ -45,11 +46,6 @@ void DLC::Michel_levy()
 	gsl_vector * XYZ = gsl_vector_alloc (3);
 	gsl_vector * RGB = gsl_vector_alloc (3);
 
-	CImg<unsigned char> image(dlen,100,1,3);
-	
-
-	// gsl_matrix * rgb = gsl_matrix_alloc (1,dlen,3); cant do this
-
 	for(int i=0;i<dlen;i++)
 	{
 		gsl_vector_set(d,i,dstart+i*dstep);	
@@ -59,12 +55,6 @@ void DLC::Michel_levy()
 	{
 		gsl_vector_set(lambda,i,360+i);
 	}
-
-	//for(int i=0;i<len;i++)
-	//{
-	//	printf("%g\n",gsl_vector_get(lambda,i));	
-	//}
-
 
 	// load cie data
   	gsl_vector * xm = gsl_vector_alloc (len);
@@ -141,9 +131,9 @@ void DLC::Michel_levy()
 			ymi = gsl_vector_get(ym,l);
 			zmi = gsl_vector_get(zm,l);
 
-			gsl_vector_set(Xr,l, xmi*Ts);
-			gsl_vector_set(Yr,l, ymi*Ts);
-			gsl_vector_set(Zr,l, zmi*Ts);
+			gsl_vector_set(Xr,l,xmi*Ts);
+			gsl_vector_set(Yr,l,ymi*Ts);
+			gsl_vector_set(Zr,l,zmi*Ts);
 
 			
 		}
@@ -155,36 +145,31 @@ void DLC::Michel_levy()
 
 		Norm = X+Y+Z;
 		
-		Xn = X/Norm;
-        	Yn = Y/Norm;
-        	Zn = Z/Norm;
+		//Xn = X/Norm;
+        	//Yn = Y/Norm;
+        	//Zn = Z/Norm;
+
+		printf("X%g Y%g Z%g\n",Xn,Yn,Zn);
 
 		//gsl_vector_set(XYZ,0,X);
 		//gsl_vector_set(XYZ,1,Y);
 		//gsl_vector_set(XYZ,2,Z);
 
-		for(int ypix=0;ypix<100;ypix++)
-		{
-			image[dc,ypix,0]=gsl_vector_get(RGB,0);
-			image[dc,ypix,1]=gsl_vector_get(RGB,1);
-			image[dc,ypix,2]=gsl_vector_get(RGB,2);
-		}
-
-		//printf("X%g Y%g Z%g\n",X,Y,Z);
-
 		//XYZ2RGB(RGB,XYZ);
+
+		for(yp=0;yp<ypix;yp++) //will loop on rho for this
+		{
+			gsl_matrix_set(Xmat,dc,yp,X);
+			gsl_matrix_set(Ymat,dc,yp,Y);
+			gsl_matrix_set(Zmat,dc,yp,Z);
+			
+		}
+	
 	//printf("R%g G%g B%g\n",gsl_vector_get(RGB,0),gsl_vector_get(RGB,1),gsl_vector_get(RGB,2));
 		
 	}
 	
-		
-	CImgDisplay main_disp(image);
-	while (!main_disp.is_closed()) {
-      		main_disp.wait();
-	}
-
-	
-	//free vector memory
+	//free vector and matrix memory
 	gsl_vector_free (xm);
 	gsl_vector_free (ym);
 	gsl_vector_free (zm);

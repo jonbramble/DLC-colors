@@ -16,14 +16,10 @@
 #include <gsl/gsl_linalg.h>
 #include <gsl/gsl_eigen.h>
 
-#include "CImg.h"
-
-using namespace cimg_library;
-
 class DLC
 {
 public:
-    void Michel_levy();
+    void Michel_levy(double,int,int,int,gsl_matrix*,gsl_matrix*,gsl_matrix*);
 private:
     void XYZ2RGB(gsl_vector*, gsl_vector*);
 };
