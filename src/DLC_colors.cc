@@ -89,8 +89,6 @@ void DLC::Michel_levy(double Dn, int dlen, int dstart, int dend, gsl_matrix * Xm
 			cDS2 = cos(DeltaSamp/2);
 			sDS2 = sin(DeltaSamp/2);
 
-	//printf("l= %g d=%g DS2=%g\n",gsl_vector_get(lambda,l),gsl_vector_get(d,dc),sDS2);
-
 			crho = cos(rho);
 			srho = sin(rho);
 
@@ -149,7 +147,7 @@ void DLC::Michel_levy(double Dn, int dlen, int dstart, int dend, gsl_matrix * Xm
         	//Yn = Y/Norm;
         	//Zn = Z/Norm;
 
-		printf("X%g Y%g Z%g\n",Xn,Yn,Zn);
+		//printf("X%g Y%g Z%g\n",X,Y,Z);
 
 		//gsl_vector_set(XYZ,0,X);
 		//gsl_vector_set(XYZ,1,Y);
@@ -161,8 +159,7 @@ void DLC::Michel_levy(double Dn, int dlen, int dstart, int dend, gsl_matrix * Xm
 		{
 			gsl_matrix_set(Xmat,dc,yp,X);
 			gsl_matrix_set(Ymat,dc,yp,Y);
-			gsl_matrix_set(Zmat,dc,yp,Z);
-			
+			gsl_matrix_set(Zmat,dc,yp,Z);	
 		}
 	
 	//printf("R%g G%g B%g\n",gsl_vector_get(RGB,0),gsl_vector_get(RGB,1),gsl_vector_get(RGB,2));
