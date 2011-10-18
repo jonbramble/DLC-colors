@@ -3,11 +3,11 @@
 void DLC::Michel_levy()
 {
 	const int len = 471; // data length defined by cie data
-	const int dlen = 100; // number of points in thickness
+	const int dlen = 500; // number of points in thickness
 	const int dstart = 100;
-	const int dend = 200;
+	const int dend = 5000;
 
- 	double dstep, X, Y, Z, Norm, DeltaComp, DeltaSamp, cDC2, sDC2, cDS2, sDS2, crho, srho, Ts;
+ 	double dstep, X, Y, Z, Xn, Yn, Zn, Norm, DeltaComp, DeltaSamp, cDC2, sDC2, cDS2, sDS2, crho, srho, Ts, xmi, ymi, zmi, R, G, B;
 	const double Dn = 0.11;
 	const double lambda0 = 528;
 	const int m = 4;
@@ -35,13 +35,15 @@ void DLC::Michel_levy()
 
 	gsl_vector * d = gsl_vector_alloc (dlen);
 	gsl_vector * lambda = gsl_vector_alloc (len);
-	gsl_vector * T = gsl_vector_alloc (len);
 
 	gsl_vector * Xr = gsl_vector_alloc (len);
 	gsl_vector * Yr = gsl_vector_alloc (len);
 	gsl_vector * Zr = gsl_vector_alloc (len);
 
 	gsl_vector_complex * E = gsl_vector_complex_alloc (2);
+
+	gsl_vector * XYZ = gsl_vector_alloc (3);
+	gsl_vector * RGB = gsl_vector_alloc (3);
 	
 
 	// gsl_matrix * rgb = gsl_matrix_alloc (1,dlen,3); cant do this
@@ -86,16 +88,16 @@ void DLC::Michel_levy()
 		{
 			DeltaComp = (m*M_PI*lambda0)/gsl_vector_get(lambda,l);
 			DeltaSamp = 2*M_PI*Dn*gsl_vector_get(d,dc)/gsl_vector_get(lambda,l); 
-			
-			/*Comp = [cos(DeltaComp/2),1i*sin(DeltaComp/2);1i*sin(DeltaComp/2),cos(DeltaComp/2)];
-            Sample = [exp(1i*(DeltaSamp/2))*cos(rho(r))^2+exp(1i*(-DeltaSamp/2))*sin(rho(r))^2,2*1i*sin(rho(r))*cos(rho(r))*sin(DeltaSamp/2);2*1i*sin(rho(r))*cos(rho(r))*sin(DeltaSamp/2),exp(1i*(-DeltaSamp/2))*cos(rho(r))^2+exp(1i*(DeltaSamp/2))*sin(rho(r))^2];
-            Reflec = [-exp(1i*pi),0;0,-exp(1i*pi)];*/
+
+            		//Reflec = [-exp(1i*pi),0;0,-exp(1i*pi)];
 
 			cDC2 = cos(DeltaComp/2);
 			sDC2 = sin(DeltaComp/2);
 		
 			cDS2 = cos(DeltaSamp/2);
 			sDS2 = sin(DeltaSamp/2);
+
+	//printf("l= %g d=%g DS2=%g\n",gsl_vector_get(lambda,l),gsl_vector_get(d,dc),sDS2);
 
 			crho = cos(rho);
 			srho = sin(rho);
@@ -124,29 +126,57 @@ void DLC::Michel_levy()
             		//	Ts = E'*E;  careful with complex comps in C++
             		//	T(l) = Ts; % generate the spectra 
 
+			// bypass matrix manipulations here for simple case, test in matlab
+			//gsl_matrix_complex_get(E,0,0)
+
+			gsl_vector_complex_set(E,0,sample_c[1]); //check index
+
+			Ts = gsl_complex_abs2(sample_c[1]); 
+
+			//printf("Ts %g\n",Ts);
+
+			xmi = gsl_vector_get(xm,l);	
+			ymi = gsl_vector_get(ym,l);
+			zmi = gsl_vector_get(zm,l);
+
+			gsl_vector_set(Xr,l, xmi*Ts);
+			gsl_vector_set(Yr,l, ymi*Ts);
+			gsl_vector_set(Zr,l, zmi*Ts);
+
 			
-			Ts=0.0; 
-			gsl_vector_set(T,l,Ts);	
 		}
 
 		//trapezium method - step is 1nm
-		X = gsl_blas_dasum(xm)-(gsl_vector_get(xm,len-1))/2-(gsl_vector_get(xm,0))/2;
-		Y = gsl_blas_dasum(ym)-(gsl_vector_get(ym,len-1))/2-(gsl_vector_get(ym,0))/2;
-		Z = gsl_blas_dasum(zm)-(gsl_vector_get(zm,len-1))/2-(gsl_vector_get(zm,0))/2;
+		X = gsl_blas_dasum(Xr)-(gsl_vector_get(Xr,len-1))/2-(gsl_vector_get(Xr,0))/2;
+		Y = gsl_blas_dasum(Yr)-(gsl_vector_get(Yr,len-1))/2-(gsl_vector_get(Yr,0))/2;
+		Z = gsl_blas_dasum(Zr)-(gsl_vector_get(Zr,len-1))/2-(gsl_vector_get(Zr,0))/2;
+
+		Norm = X+Y+Z;
+		
+		Xn = X/Norm;
+        	Yn = Y/Norm;
+        	Zn = Z/Norm;
+
+		gsl_vector_set(XYZ,0,X);
+		gsl_vector_set(XYZ,1,Y);
+		gsl_vector_set(XYZ,2,Z);
+
+		//printf("X%g Y%g Z%g\n",X,Y,Z);
+
+		XYZ2RGB(RGB,XYZ);
+	printf("R%g G%g B%g\n",gsl_vector_get(RGB,0),gsl_vector_get(RGB,1),gsl_vector_get(RGB,2));
 
 		
 	}
-
-	
-	
-	
-
-	
 	
 	//free vector memory
 	gsl_vector_free (xm);
 	gsl_vector_free (ym);
 	gsl_vector_free (zm);
+
+	gsl_vector_free (Xr);
+	gsl_vector_free (Yr);
+	gsl_vector_free (Zr);
 
 	gsl_matrix_free (A);
 	gsl_matrix_free (P);
@@ -154,9 +184,57 @@ void DLC::Michel_levy()
 	gsl_matrix_complex_free (Comp);
 	gsl_matrix_complex_free (Sample);
 	gsl_matrix_complex_free (Reflect);
-	
-	Norm = X+Y+Z;
-	
-	//printf("%g\n",GSL_REAL(comp_c[0]));
 
+	gsl_vector_free (XYZ);
+	gsl_vector_free (RGB);
+	
 } 
+
+void DLC::XYZ2RGB(gsl_vector * RGB, gsl_vector * XYZ)
+{
+	// http://www.easyrgb.com/
+	//replace with matrix vector multiplication
+	
+	double var_R, var_G, var_B;
+	double X, Y, Z;
+
+	X = gsl_vector_get(XYZ,0);
+	Y = gsl_vector_get(XYZ,1);
+	Z = gsl_vector_get(XYZ,2);
+
+	
+	var_R = X/100 *  3.2406 + Y/100 * -1.5372 + Z/100 * -0.4986;
+	var_G = X/100 * -0.9689 + Y/100 *  1.8758 + Z/100 *  0.0415;
+	var_B = X/100 *  0.0557 + Y/100 * -0.2040 + Z/100 *  1.0570;
+
+	if (var_R>0.0031308) {
+		var_R=1.055*pow(var_R,(1/2.4))-0.055;
+	}
+	else {
+		var_R = 12.92*var_R;
+	}
+
+	if ( var_G > 0.0031308 ){
+		var_G = 1.055*pow(var_G,(1/2.4))-0.055;
+	}
+	else      
+	{               
+		var_G = 12.92*var_G;
+	}
+
+	if ( var_B > 0.0031308 ) {
+		var_B = 1.055 * pow(var_B,(1/2.4))- 0.055;
+	}
+	else       
+	{              
+		var_B = 12.92 * var_B;
+	}
+
+
+	gsl_vector_set(RGB,0,var_R*255);
+	gsl_vector_set(RGB,1,var_G*255);
+	gsl_vector_set(RGB,2,var_B*255);
+
+}
+
+

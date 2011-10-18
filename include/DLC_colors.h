@@ -20,6 +20,8 @@ class DLC
 {
 public:
     void Michel_levy();
+private:
+    void XYZ2RGB(gsl_vector*, gsl_vector*);
 };
 
 #endif
