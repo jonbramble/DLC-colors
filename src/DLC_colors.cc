@@ -44,6 +44,8 @@ void DLC::Michel_levy()
 
 	gsl_vector * XYZ = gsl_vector_alloc (3);
 	gsl_vector * RGB = gsl_vector_alloc (3);
+
+	CImg<unsigned char> image(dlen,100,1,3);
 	
 
 	// gsl_matrix * rgb = gsl_matrix_alloc (1,dlen,3); cant do this
@@ -157,17 +159,30 @@ void DLC::Michel_levy()
         	Yn = Y/Norm;
         	Zn = Z/Norm;
 
-		gsl_vector_set(XYZ,0,X);
-		gsl_vector_set(XYZ,1,Y);
-		gsl_vector_set(XYZ,2,Z);
+		//gsl_vector_set(XYZ,0,X);
+		//gsl_vector_set(XYZ,1,Y);
+		//gsl_vector_set(XYZ,2,Z);
+
+		for(int ypix=0;ypix<100;ypix++)
+		{
+			image[dc,ypix,0]=gsl_vector_get(RGB,0);
+			image[dc,ypix,1]=gsl_vector_get(RGB,1);
+			image[dc,ypix,2]=gsl_vector_get(RGB,2);
+		}
 
 		//printf("X%g Y%g Z%g\n",X,Y,Z);
 
-		XYZ2RGB(RGB,XYZ);
-	printf("R%g G%g B%g\n",gsl_vector_get(RGB,0),gsl_vector_get(RGB,1),gsl_vector_get(RGB,2));
-
+		//XYZ2RGB(RGB,XYZ);
+	//printf("R%g G%g B%g\n",gsl_vector_get(RGB,0),gsl_vector_get(RGB,1),gsl_vector_get(RGB,2));
 		
 	}
+	
+		
+	CImgDisplay main_disp(image);
+	while (!main_disp.is_closed()) {
+      		main_disp.wait();
+	}
+
 	
 	//free vector memory
 	gsl_vector_free (xm);
@@ -229,7 +244,6 @@ void DLC::XYZ2RGB(gsl_vector * RGB, gsl_vector * XYZ)
 	{              
 		var_B = 12.92 * var_B;
 	}
-
 
 	gsl_vector_set(RGB,0,var_R*255);
 	gsl_vector_set(RGB,1,var_G*255);
