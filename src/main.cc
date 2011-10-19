@@ -64,6 +64,7 @@ int main(int argc, char* argv[]) {
 
 	CImg<float> img(dlen,ypix,1,3);
 	
+	
 	for(dc=0;dc<dlen;dc++)
 	{
 	for(yp=0;yp<ypix;yp++) //will loop on rho for this

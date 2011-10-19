@@ -54,7 +54,8 @@ am__dirstamp = $(am__leading_dot)dirstamp
 am_DLC_colors_OBJECTS = src/main.$(OBJEXT) src/DLC_colors.$(OBJEXT)
 DLC_colors_OBJECTS = $(am_DLC_colors_OBJECTS)
 am__DEPENDENCIES_1 =
-DLC_colors_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
+DLC_colors_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1)
 DEFAULT_INCLUDES = -I.
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -119,6 +120,8 @@ LTLIBOBJS =
 MAKEINFO = ${SHELL} /home/DS/phyjpb/Programming/C/DLC-colors/missing --run makeinfo
 MKDIR_P = /bin/mkdir -p
 OBJEXT = o
+OPENMP_CFLAGS = -fopenmp
+OPENMP_LIBS = -fopenmp
 PACKAGE = DLC_colors
 PACKAGE_BUGREPORT = phyjpb@leeds.ac.uk
 PACKAGE_NAME = DLC_colors
@@ -176,8 +179,8 @@ top_builddir = .
 top_srcdir = .
 AUTOMAKE_OPTIONS = subdir-objects
 ACLOCAL_AMFLAGS = ${ACLOCAL_FLAGS}
-AM_CPPFLAGS = $(GSL_CFLAGS) #$(OMP_OPTS)
-DLC_colors_LDADD = $(GSL_LIBS) $(CIMG_LIBS) $(TIFF_LIBS) #$(OMP_OPTS)
+AM_CPPFLAGS = $(GSL_CFLAGS) $(OPENMP_CFLAGS)
+DLC_colors_LDADD = $(GSL_LIBS) $(CIMG_LIBS) $(TIFF_LIBS) $(OPENMP_LIBS)
 DLC_colors_SOURCES = include/DLC_colors.h src/main.cc src/DLC_colors.cc 
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am

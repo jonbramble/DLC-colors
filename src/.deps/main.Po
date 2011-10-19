@@ -145,7 +145,8 @@ src/main.o: src/main.cc config.h src/../include/DLC_colors.h \
  /usr/include/gsl/gsl_blas.h /usr/include/gsl/gsl_blas_types.h \
  /usr/include/gsl/gsl_cblas.h /usr/include/gsl/gsl_linalg.h \
  /usr/include/gsl/gsl_mode.h /usr/include/gsl/gsl_permutation.h \
- /usr/include/gsl/gsl_eigen.h /usr/include/CImg.h \
+ /usr/include/gsl/gsl_eigen.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.6.1/include/omp.h /usr/include/CImg.h \
  /usr/include/c++/4.6/cstdio /usr/include/c++/4.6/cstdlib \
  /usr/include/c++/4.6/cstdarg /usr/include/c++/4.6/cstring \
  /usr/include/string.h /usr/include/x86_64-linux-gnu/bits/string3.h \
@@ -562,6 +563,8 @@ src/../include/DLC_colors.h:
 /usr/include/gsl/gsl_permutation.h:
 
 /usr/include/gsl/gsl_eigen.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/4.6.1/include/omp.h:
 
 /usr/include/CImg.h:
 

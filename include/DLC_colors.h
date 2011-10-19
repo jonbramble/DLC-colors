@@ -16,6 +16,8 @@
 #include <gsl/gsl_linalg.h>
 #include <gsl/gsl_eigen.h>
 
+#include <omp.h>
+
 class DLC
 {
 public:

@@ -13,6 +13,8 @@ void DLC::Michel_levy(double Dn, int dlen, int dstart, int dend, gsl_matrix * Xm
 	const double lambda0 = 528;
 	const int m = 4;
 
+	int tid, nthreads; // threading
+
 	const double rho = M_PI/4;
 
 	dstep = (dend-dstart)/dlen;
@@ -137,9 +139,32 @@ void DLC::Michel_levy(double Dn, int dlen, int dstart, int dend, gsl_matrix * Xm
 		}
 
 		//trapezium method - step is 1nm
-		X = gsl_blas_dasum(Xr)-(gsl_vector_get(Xr,len-1))/2-(gsl_vector_get(Xr,0))/2;
-		Y = gsl_blas_dasum(Yr)-(gsl_vector_get(Yr,len-1))/2-(gsl_vector_get(Yr,0))/2;
-		Z = gsl_blas_dasum(Zr)-(gsl_vector_get(Zr,len-1))/2-(gsl_vector_get(Zr,0))/2;
+
+		#pragma omp parallel //shared(nthreads) private(i,tid)
+  		{
+  			/*tid = omp_get_thread_num();
+  			if (tid == 0)
+    			{
+    				nthreads = omp_get_num_threads();
+    				printf("Number of threads = %d\n", nthreads);
+    			}*/
+
+		#pragma omp sections nowait
+    		{
+    			#pragma omp section
+      			{
+			X = gsl_blas_dasum(Xr)-(gsl_vector_get(Xr,len-1))/2-(gsl_vector_get(Xr,0))/2;
+			}
+			#pragma omp section
+      			{
+			Y = gsl_blas_dasum(Yr)-(gsl_vector_get(Yr,len-1))/2-(gsl_vector_get(Yr,0))/2;
+			}
+			#pragma omp section
+      			{
+			Z = gsl_blas_dasum(Zr)-(gsl_vector_get(Zr,len-1))/2-(gsl_vector_get(Zr,0))/2;
+			}
+		}
+		} // end of parallel section
 
 		Norm = X+Y+Z;
 		
