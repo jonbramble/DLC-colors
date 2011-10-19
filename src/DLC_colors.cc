@@ -115,7 +115,7 @@ void DLC::Michel_levy(double Dn, int dlen, int dstart, int dend, gsl_matrix * Xm
 			gsl_matrix_complex_set(Sample,1,0,sample_c[2]);
 			gsl_matrix_complex_set(Sample,1,1,sample_c[3]);
 
-			//matrix manipluations next gsl cblas
+			//matrix manipulations
 			//%E = P*Sample*A;
             		//	E = P*Sample*Reflec*Sample*A;   
             		//	Ts = E'*E;  careful with complex comps in C++
@@ -135,8 +135,6 @@ void DLC::Michel_levy(double Dn, int dlen, int dstart, int dend, gsl_matrix * Xm
 			gsl_vector_set(Xr,l,xmi*Ts);
 			gsl_vector_set(Yr,l,ymi*Ts);
 			gsl_vector_set(Zr,l,zmi*Ts);
-
-			
 		}
 
 		//trapezium method - step is 1nm
@@ -207,9 +205,6 @@ void DLC::Michel_levy(double Dn, int dlen, int dstart, int dend, gsl_matrix * Xm
 		}
 
 		}
-	
-	//printf("R%g G%g B%g\n",gsl_vector_get(RGB,0),gsl_vector_get(RGB,1),gsl_vector_get(RGB,2));
-		
 	}
 	
 	//free vector and matrix memory
