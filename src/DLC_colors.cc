@@ -143,23 +143,31 @@ void DLC::Michel_levy(double Dn, int dlen, int dstart, int dend, gsl_matrix * Xm
 
 		Norm = X+Y+Z;
 		
-		//Xn = X/Norm;
-        	//Yn = Y/Norm;
-        	//Zn = Z/Norm;
+		Xn = X/Norm;
+        	Yn = Y/Norm;
+        	Zn = Z/Norm;
 
-		//printf("X%g Y%g Z%g\n",X,Y,Z);
+		gsl_vector_set(XYZ,0,Xn);
+		gsl_vector_set(XYZ,1,Yn);
+		gsl_vector_set(XYZ,2,Zn);
 
-		//gsl_vector_set(XYZ,0,X);
-		//gsl_vector_set(XYZ,1,Y);
-		//gsl_vector_set(XYZ,2,Z);
+		XYZ2RGB(RGB,XYZ); // convert to RGB
 
-		//XYZ2RGB(RGB,XYZ);
-
+	
 		for(yp=0;yp<ypix;yp++) //will loop on rho for this
 		{
-			gsl_matrix_set(Xmat,dc,yp,Xn);
-			gsl_matrix_set(Ymat,dc,yp,Yn);
-			gsl_matrix_set(Zmat,dc,yp,Zn);	
+			
+			R = gsl_vector_get(RGB,0);
+			G = gsl_vector_get(RGB,1);
+			B = gsl_vector_get(RGB,2);
+			
+			gsl_matrix_set(Xmat,dc,yp,R);
+			gsl_matrix_set(Ymat,dc,yp,G);
+			gsl_matrix_set(Zmat,dc,yp,B);
+			
+			//gsl_matrix_set(Xmat,dc,yp,X);
+			//gsl_matrix_set(Ymat,dc,yp,Y);
+			//gsl_matrix_set(Zmat,dc,yp,Z);	
 		}
 	
 	//printf("R%g G%g B%g\n",gsl_vector_get(RGB,0),gsl_vector_get(RGB,1),gsl_vector_get(RGB,2));
@@ -195,14 +203,14 @@ void DLC::XYZ2RGB(gsl_vector * RGB, gsl_vector * XYZ)
 	double var_R, var_G, var_B;
 	double X, Y, Z;
 
-	X = gsl_vector_get(XYZ,0);
-	Y = gsl_vector_get(XYZ,1);
-	Z = gsl_vector_get(XYZ,2);
+	X = gsl_vector_get(XYZ,0)/100;
+	Y = gsl_vector_get(XYZ,1)/100;
+	Z = gsl_vector_get(XYZ,2)/100;
 
 	
-	var_R = X/100 *  3.2406 + Y/100 * -1.5372 + Z/100 * -0.4986;
-	var_G = X/100 * -0.9689 + Y/100 *  1.8758 + Z/100 *  0.0415;
-	var_B = X/100 *  0.0557 + Y/100 * -0.2040 + Z/100 *  1.0570;
+	var_R = X* 3.2406 + Y*-1.5372 + Z*-0.4986;
+	var_G = X*-0.9689 + Y* 1.8758 + Z*0.0415;
+	var_B = X* 0.0557 + Y*-0.2040 + Z*1.0570;
 
 	if (var_R>0.0031308) {
 		var_R=1.055*pow(var_R,(1/2.4))-0.055;
