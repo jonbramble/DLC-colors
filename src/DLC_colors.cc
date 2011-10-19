@@ -3,38 +3,41 @@
 void DLC::Michel_levy(double Dn, int dlen, int dstart, int dend, gsl_matrix * Xmat, gsl_matrix * Ymat, gsl_matrix * Zmat)
 {
 	const int len = 471; // data length defined by cie data
-	//const int dlen = 1000; // number of points in thickness
-	//const int dstart = 0;
-	//const int dend = 15000;
-	const int ypix=100;
+	const int ypix=100; // this will be replaced by rho
 	int yp;
 
  	double dstep, X, Y, Z, Xn, Yn, Zn, Norm, DeltaComp, DeltaSamp, cDC2, sDC2, cDS2, sDS2, crho, srho, Ts, xmi, ymi, zmi, R, G, B;
-	const double lambda0 = 528;
-	const int m = 4;
+	const double lambda0 = 528;   // for my compensator this is correct
+	const int m = 4;		// this is an approximation to a real device
 
 	int tid, nthreads; // threading
 
 	const double rho = M_PI/4;
 
+	gsl_complex one = gsl_complex_rect(0,1);
+	gsl_complex zero = gsl_complex_rect(0,0);
+
 	dstep = (dend-dstart)/dlen;
 
-	gsl_matrix * A = gsl_matrix_alloc (1,2);
-	gsl_matrix * P = gsl_matrix_alloc (2,2);
+	gsl_vector_complex * A = gsl_vector_complex_alloc (2);
+	gsl_matrix_complex * P = gsl_matrix_complex_alloc (2,2);
 
 	gsl_matrix_complex * Comp = gsl_matrix_complex_alloc (2,2);
 	gsl_matrix_complex * Sample = gsl_matrix_complex_alloc (2,2);
 	gsl_matrix_complex * Reflect = gsl_matrix_complex_alloc (2,2);
+	gsl_matrix_complex * Temp = gsl_matrix_complex_alloc (2,2);
 
 	gsl_complex comp_c[2];
 	gsl_complex sample_c[4];
 	gsl_complex refl_c[4];
 
-	gsl_matrix_set_zero(A);
-	gsl_matrix_set_zero(P);
+	gsl_vector_complex_set(A,0,zero);
+	gsl_vector_complex_set(A,1,one);
 
-	gsl_matrix_set(A,0,1,1); // only non-zero elements
-	gsl_matrix_set(P,0,0,1);	
+	gsl_matrix_complex_set(P,0,0,one);	
+	gsl_matrix_complex_set(P,0,1,zero);
+	gsl_matrix_complex_set(P,1,0,zero);
+	gsl_matrix_complex_set(P,1,1,zero);
 
 	gsl_vector * d = gsl_vector_alloc (dlen);
 	gsl_vector * lambda = gsl_vector_alloc (len);
@@ -118,14 +121,12 @@ void DLC::Michel_levy(double Dn, int dlen, int dstart, int dend, gsl_matrix * Xm
             		//	Ts = E'*E;  careful with complex comps in C++
             		//	T(l) = Ts; % generate the spectra 
 
-			// bypass matrix manipulations here for simple case, test in matlab
-			//gsl_matrix_complex_get(E,0,0)
+			gsl_blas_zgemm(CblasNoTrans,CblasNoTrans,one,P,Sample,zero,Temp);  // Temp = P*Sample
+			gsl_blas_zgemv(CblasNoTrans,one,Temp,A,zero,E);			// E = Temp*A
 
-			gsl_vector_complex_set(E,0,sample_c[1]); //check index
+			Ts = gsl_complex_abs2(gsl_vector_complex_get(E,0)); 
 
-			Ts = gsl_complex_abs2(sample_c[1]); 
-
-			//printf("Ts %g\n",Ts);
+			//printf("Ts %g\n",GSL_REAL(sample_c[0]));
 
 			xmi = gsl_vector_get(xm,l);	
 			ymi = gsl_vector_get(ym,l);
@@ -220,12 +221,13 @@ void DLC::Michel_levy(double Dn, int dlen, int dstart, int dend, gsl_matrix * Xm
 	gsl_vector_free (Yr);
 	gsl_vector_free (Zr);
 
-	gsl_matrix_free (A);
-	gsl_matrix_free (P);
+	gsl_vector_complex_free (A);
+	gsl_matrix_complex_free (P);
 
 	gsl_matrix_complex_free (Comp);
 	gsl_matrix_complex_free (Sample);
 	gsl_matrix_complex_free (Reflect);
+	gsl_matrix_complex_free (Temp);
 
 	gsl_vector_free (XYZ);
 	gsl_vector_free (RGB);
