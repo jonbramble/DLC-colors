@@ -140,7 +140,7 @@ void DLC::Michel_levy(double Dn, int dlen, int dstart, int dend, gsl_matrix * Xm
 
 		//trapezium method - step is 1nm
 
-		#pragma omp parallel //shared(nthreads) private(i,tid)
+		#pragma omp parallel //private(Xr,Yr,Zr)
   		{
   			/*tid = omp_get_thread_num();
   			if (tid == 0)
@@ -178,14 +178,24 @@ void DLC::Michel_levy(double Dn, int dlen, int dstart, int dend, gsl_matrix * Xm
 
 		XYZ2RGB(RGB,XYZ); // convert to RGB
 
-	
-		for(yp=0;yp<ypix;yp++) //will loop on rho for this
+		R = gsl_vector_get(RGB,0);
+		G = gsl_vector_get(RGB,1);
+		B = gsl_vector_get(RGB,2);
+
+		#pragma omp parallel shared(Xmat,Ymat,Zmat,R,G,B) private(yp,tid)
 		{
-			
-			R = gsl_vector_get(RGB,0);
-			G = gsl_vector_get(RGB,1);
-			B = gsl_vector_get(RGB,2);
-			
+
+		/*tid = omp_get_thread_num();
+  			if (tid == 0)
+    			{
+    			nthreads = omp_get_num_threads();
+    			printf("Number of threads = %d\n", nthreads);
+    			}
+  			printf("Thread %d starting...\n",tid);*/
+
+		#pragma omp for schedule(dynamic,ypix)   //chunk is height dimension
+		for(yp=0;yp<ypix;yp++) //will loop on rho for this
+		{		
 			gsl_matrix_set(Xmat,dc,yp,R);
 			gsl_matrix_set(Ymat,dc,yp,G);
 			gsl_matrix_set(Zmat,dc,yp,B);
@@ -193,6 +203,8 @@ void DLC::Michel_levy(double Dn, int dlen, int dstart, int dend, gsl_matrix * Xm
 			//gsl_matrix_set(Xmat,dc,yp,X);
 			//gsl_matrix_set(Ymat,dc,yp,Y);
 			//gsl_matrix_set(Zmat,dc,yp,Z);	
+		}
+
 		}
 	
 	//printf("R%g G%g B%g\n",gsl_vector_get(RGB,0),gsl_vector_get(RGB,1),gsl_vector_get(RGB,2));
@@ -226,16 +238,24 @@ void DLC::XYZ2RGB(gsl_vector * RGB, gsl_vector * XYZ)
 	//replace with matrix vector multiplication
 	
 	double var_R, var_G, var_B;
-	double X, Y, Z;
 
-	X = gsl_vector_get(XYZ,0)/100;
-	Y = gsl_vector_get(XYZ,1)/100;
-	Z = gsl_vector_get(XYZ,2)/100;
+	gsl_matrix * T = gsl_matrix_alloc (3,3);
 
+	gsl_matrix_set(T,0,0,3.2406);
+	gsl_matrix_set(T,0,1,-1.5372);
+	gsl_matrix_set(T,0,2,-0.4986);
+	gsl_matrix_set(T,1,0,-0.9689);
+	gsl_matrix_set(T,1,1,1.8758);
+	gsl_matrix_set(T,1,2,0.0415);
+	gsl_matrix_set(T,2,0,0.0557);
+	gsl_matrix_set(T,2,1,-0.2040);
+	gsl_matrix_set(T,2,2,1.0570);
 	
-	var_R = X* 3.2406 + Y*-1.5372 + Z*-0.4986;
-	var_G = X*-0.9689 + Y* 1.8758 + Z*0.0415;
-	var_B = X* 0.0557 + Y*-0.2040 + Z*1.0570;
+	gsl_blas_dgemv(CblasNoTrans,0.01,T,XYZ,0,RGB);
+
+	var_R = gsl_vector_get(RGB,0);
+	var_G = gsl_vector_get(RGB,1);
+	var_B = gsl_vector_get(RGB,2);
 
 	if (var_R>0.0031308) {
 		var_R=1.055*pow(var_R,(1/2.4))-0.055;
@@ -263,6 +283,8 @@ void DLC::XYZ2RGB(gsl_vector * RGB, gsl_vector * XYZ)
 	gsl_vector_set(RGB,0,var_R*255);
 	gsl_vector_set(RGB,1,var_G*255);
 	gsl_vector_set(RGB,2,var_B*255);
+
+	gsl_matrix_free(T);
 
 }
 
