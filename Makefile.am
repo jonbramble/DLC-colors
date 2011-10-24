@@ -13,8 +13,8 @@ ACLOCAL_AMFLAGS = ${ACLOCAL_FLAGS}
 ## directory named by the predefined variable $(bindir).
 bin_PROGRAMS = DLC_colors
 
-AM_CPPFLAGS = $(GSL_CFLAGS) $(OPENMP_CFLAGS)
-DLC_colors_LDADD = $(GSL_LIBS) $(CIMG_LIBS) $(TIFF_LIBS) $(OPENMP_LIBS)
+AM_CPPFLAGS = $(GSL_CFLAGS) #$(OPENMP_CFLAGS)
+DLC_colors_LDADD = $(GSL_LIBS) $(CIMG_LIBS) $(TIFF_LIBS) #$(OPENMP_LIBS)
 
 ## Define the list of source files for the "hello" target. The file extension
 ## .cc is recognized by Automake, and causes it to produce rules which invoke
