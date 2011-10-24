@@ -135,8 +135,8 @@ void DLC::Michel_levy(double Dn, int dlen, int dstart, int dend, gsl_matrix * Xm
             		//	T(l) = Ts; % generate the spectra 
 
 					gsl_blas_zgemm(CblasNoTrans,CblasNoTrans,one,P,Sample,zero,TempA);   // TempA = P*Sample
-					gsl_blas_zgemm(CblasNoTrans,CblasNoTrans,one,TempA,Comp,zero,TempB);  // TempB = TempA*Comp
-					gsl_blas_zgemv(CblasNoTrans,one,TempB,A,zero,E);			  // E = TempB*A
+				//gsl_blas_zgemm(CblasNoTrans,CblasNoTrans,one,TempA,Comp,zero,TempB);  // TempB = TempA*Comp
+					gsl_blas_zgemv(CblasNoTrans,one,TempA,A,zero,E);		     // E = TempB*A
 
 	Ts = gsl_complex_abs2(gsl_vector_complex_get(E,0))+gsl_complex_abs2(gsl_vector_complex_get(E,1)); 
 
