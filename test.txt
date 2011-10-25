@@ -1,0 +1,300 @@
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+Xn -nan
+, dlc.cc -nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan
+-nan

@@ -3,3 +3,4 @@ src/.deps/
 src/*.o
 DLC_colors
 *~
+*.log

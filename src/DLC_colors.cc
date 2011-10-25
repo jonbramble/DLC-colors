@@ -3,14 +3,14 @@
 void DLC::Michel_levy(double Dn, int dlen, int dstart, int dend, gsl_matrix * Xmat, gsl_matrix * Ymat, gsl_matrix * Zmat)
 {
 	const int len = 471; // data length defined by cie data
-	const int ypix= 100; // this will be replaced by rho
+	const int ypix= 300; // this will be replaced by rho
 	int yp;
 
  	double dstep, X, Y, Z, Xn, Yn, Zn, Norm, DeltaComp, DeltaSamp, cDC2, sDC2, cDS2, sDS2, crho, srho, Ts, xmi, ymi, zmi, R, G, B;
 	const double lambda0 = 528;   // for my compensator this is correct
 	const int m = 4;		// this is an approximation to a real device
 
-	int rhol, dc, l;
+	int rhol, dc, l, i;
 
 	const double rho_max = M_PI/4;
 	int rhostep = (2*rho_max)/ypix;
@@ -56,17 +56,17 @@ void DLC::Michel_levy(double Dn, int dlen, int dstart, int dend, gsl_matrix * Xm
 	gsl_vector * XYZ = gsl_vector_alloc (3);
 	gsl_vector * RGB = gsl_vector_alloc (3);
 
-	for(int i=0;i<dlen;i++)
+	for(i=0;i<dlen;i++)
 	{
 		gsl_vector_set(d,i,dstart+i*dstep);	
 	}
 
-	for(int i=0;i<len;i++)
+	for(i=0;i<len;i++)
 	{
 		gsl_vector_set(lambda,i,360+i);
 	}
 
-	for(int i=0;i<ypix;i++)
+	for(i=0;i<ypix;i++)
 	{
 		gsl_vector_set(rho,i,(-1*rho_max)+rhostep*i);
 	}
@@ -134,9 +134,9 @@ void DLC::Michel_levy(double Dn, int dlen, int dstart, int dend, gsl_matrix * Xm
             		//	Ts = E'*E;  careful with complex conj in C++
             		//	T(l) = Ts; % generate the spectra 
 
-					gsl_blas_zgemm(CblasNoTrans,CblasNoTrans,one,P,Sample,zero,TempA);   // TempA = P*Sample
-				//gsl_blas_zgemm(CblasNoTrans,CblasNoTrans,one,TempA,Comp,zero,TempB);  // TempB = TempA*Comp
-					gsl_blas_zgemv(CblasNoTrans,one,TempA,A,zero,E);		     // E = TempB*A
+				gsl_blas_zgemm(CblasNoTrans,CblasNoTrans,one,P,Sample,zero,TempA);   // TempA = P*Sample
+				gsl_blas_zgemm(CblasNoTrans,CblasNoTrans,one,TempA,Comp,zero,TempB);  // TempB = TempA*Comp
+				gsl_blas_zgemv(CblasNoTrans,one,TempB,A,zero,E);		     // E = TempB*A
 
 	Ts = gsl_complex_abs2(gsl_vector_complex_get(E,0))+gsl_complex_abs2(gsl_vector_complex_get(E,1)); 
 
