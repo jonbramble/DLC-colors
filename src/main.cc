@@ -14,10 +14,10 @@ int main(int argc, char* argv[]) {
 	DLC data;
 
 	double Dn = 0.12;
-	int dlen = 1024;
+	int dlen = 380;
 	int dstart = 100;
 	int dend = 10000; //10um
-	int ypix = 300;
+	int ypix = 10;
 	int ypm,dcm;
 
 	double X, Y, Z;

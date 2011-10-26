@@ -1,27 +1,30 @@
 #include "../include/DLC_colors.h"
 
+
+void DLC::Prepare()
+{
+
+
+}
+
 void DLC::Michel_levy(double Dn, int dlen, int dstart, int dend, gsl_matrix * Xmat, gsl_matrix * Ymat, gsl_matrix * Zmat)
 {
-	const int len = 471; // data length defined by cie data
-	const int ypix= 300; // this will be replaced by rho
-	int yp;
+	len = 471; // data length defined by cie data
+	ypix = 10; // this will be replaced by rho
 
- 	double dstep, X, Y, Z, Xn, Yn, Zn, Norm, DeltaComp, DeltaSamp, cDC2, sDC2, cDS2, sDS2, crho, srho, Ts, xmi, ymi, zmi, R, G, B;
-	const double lambda0 = 528;   // for my compensator this is correct
-	const int m = 4;		// this is an approximation to a real device
+	lambda0 = 528;   // for my compensator this is correct
+	m = 4;		// this is an approximation to a real device
 
-	int rhol, dc, l, i;
-
-	const double rho_max = M_PI/4;
-	int rhostep = (2*rho_max)/ypix;
+	rho_max = M_PI/4;
+	rhostep = (2*rho_max)/ypix;
 
 	gsl_complex one = gsl_complex_rect(0,1);
 	gsl_complex zero = gsl_complex_rect(0,0);
 
 	dstep = (dend-dstart)/dlen;
 
-	gsl_vector_complex * A = gsl_vector_complex_alloc (2);
-	gsl_matrix_complex * P = gsl_matrix_complex_alloc (2,2);
+	A = gsl_vector_complex_alloc (2);
+	P = gsl_matrix_complex_alloc (2,2);
 
 	gsl_matrix_complex * Comp = gsl_matrix_complex_alloc (2,2);
 	gsl_matrix_complex * Sample = gsl_matrix_complex_alloc (2,2);
