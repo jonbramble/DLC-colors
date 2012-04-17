@@ -3,13 +3,13 @@
 #endif
 
 #include "../include/DLC_colors.h"
-
 #include "CImg.h"
 
 using namespace cimg_library;
 
-
 int main(int argc, char* argv[]) {
+
+	DLC *data = new DLC();	
 
 	double Dn = 0.12;
 	int dlen = 500;
@@ -24,7 +24,7 @@ int main(int argc, char* argv[]) {
 	gsl_matrix * Ymat = gsl_matrix_alloc (dlen,ypix);
 	gsl_matrix * Zmat = gsl_matrix_alloc (dlen,ypix);
 	
-	DLC::Michel_levy(Dn,ypix,dstart,dend,dlen,Xmat,Ymat,Zmat);
+	data->Michel_levy(Dn,ypix,dstart,dend,dlen,Xmat,Ymat,Zmat);
 
 	CImg<float> img(dlen,ypix,1,3);
 	

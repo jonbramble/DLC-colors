@@ -2,10 +2,6 @@
 
 void DLC::Michel_levy(double Dn, int ypix, int dstart, int dend, int dlen, gsl_matrix * Xmat, gsl_matrix * Ymat, gsl_matrix * Zmat)
 {
-	int m, len, yp, rhol, dc, l, i, rhostep;
-    	double dstep, X, Y, Z, Xn, Yn, Zn, Norm, DeltaComp, DeltaSamp, cDC2, sDC2, cDS2, sDS2, crho, srho, Ts, xmi, ymi, zmi, R, G, B;
-   	double lambda0, rho_max;
-
 	len = 471; // data length defined by cie data - do not edit
 	lambda0 = 528;   // for my compensator this is correct - do not edit
 	m = 4;		// this is an approximation to a real device - do not edit
