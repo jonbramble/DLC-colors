@@ -12,10 +12,10 @@ int main(int argc, char* argv[]) {
 	DLC *data = new DLC();	
 
 	double Dn = 0.12;
-	int dlen = 500;
+	int dlen = 750;
 	int dstart = 10;
 	int dend = 5000;
-	int ypix = 100;
+	int ypix = 250;
 	int ypm,dcm;
 
 	double X, Y, Z;

@@ -24,9 +24,8 @@ public:
 private:
     static void XYZ2RGB(gsl_vector*, gsl_vector*);
 
-    int m, len, yp, rhol, dc, l, i, rhostep;
-    double dstep, X, Y, Z, Xn, Yn, Zn, Norm, DeltaComp, DeltaSamp, cDC2, sDC2, cDS2, sDS2, crho, srho, Ts, xmi, ymi, zmi, R, G, B;
-    double lambda0, rho_max;
+    int m, len, yp, rhol, dc, l, i;
+    double dstep, X, Y, Z, Xn, Yn, Zn, Norm, DeltaComp, DeltaSamp, cDC2, sDC2, cDS2, sDS2, crho, srho, Ts, xmi, ymi, zmi, R, G, B, lambda0, rho_max, rhostep;
 };
 
 #endif

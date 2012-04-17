@@ -7,7 +7,7 @@ void DLC::Michel_levy(double Dn, int ypix, int dstart, int dend, int dlen, gsl_m
 	m = 4;		// this is an approximation to a real device - do not edit
 
 	rho_max = M_PI/4;	// we rotate by 45 each way
-	rhostep = (2*rho_max)/ypix; // in steps of ypix
+	rhostep = (2*rho_max)/(double)ypix; // in steps of ypix
 
 	gsl_complex one = gsl_complex_rect(0,1);
 	gsl_complex zero = gsl_complex_rect(0,0);
