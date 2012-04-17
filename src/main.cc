@@ -11,13 +11,11 @@ using namespace cimg_library;
 
 int main(int argc, char* argv[]) {
 
-	DLC data;
-
 	double Dn = 0.12;
-	int dlen = 380;
-	int dstart = 100;
-	int dend = 10000; //10um
-	int ypix = 10;
+	int dlen = 500;
+	int dstart = 10;
+	int dend = 5000;
+	int ypix = 100;
 	int ypm,dcm;
 
 	double X, Y, Z;
@@ -26,7 +24,7 @@ int main(int argc, char* argv[]) {
 	gsl_matrix * Ymat = gsl_matrix_alloc (dlen,ypix);
 	gsl_matrix * Zmat = gsl_matrix_alloc (dlen,ypix);
 	
-	data.Michel_levy(Dn,dlen,dstart,dend,Xmat,Ymat,Zmat);
+	DLC::Michel_levy(Dn,ypix,dstart,dend,dlen,Xmat,Ymat,Zmat);
 
 	CImg<float> img(dlen,ypix,1,3);
 	

@@ -1,30 +1,26 @@
 #include "../include/DLC_colors.h"
 
-
-void DLC::Prepare()
+void DLC::Michel_levy(double Dn, int ypix, int dstart, int dend, int dlen, gsl_matrix * Xmat, gsl_matrix * Ymat, gsl_matrix * Zmat)
 {
+	int m, len, yp, rhol, dc, l, i, rhostep;
+    	double dstep, X, Y, Z, Xn, Yn, Zn, Norm, DeltaComp, DeltaSamp, cDC2, sDC2, cDS2, sDS2, crho, srho, Ts, xmi, ymi, zmi, R, G, B;
+   	double lambda0, rho_max;
 
+	len = 471; // data length defined by cie data - do not edit
+	lambda0 = 528;   // for my compensator this is correct - do not edit
+	m = 4;		// this is an approximation to a real device - do not edit
 
-}
-
-void DLC::Michel_levy(double Dn, int dlen, int dstart, int dend, gsl_matrix * Xmat, gsl_matrix * Ymat, gsl_matrix * Zmat)
-{
-	len = 471; // data length defined by cie data
-	ypix = 10; // this will be replaced by rho
-
-	lambda0 = 528;   // for my compensator this is correct
-	m = 4;		// this is an approximation to a real device
-
-	rho_max = M_PI/4;
-	rhostep = (2*rho_max)/ypix;
+	rho_max = M_PI/4;	// we rotate by 45 each way
+	rhostep = (2*rho_max)/ypix; // in steps of ypix
 
 	gsl_complex one = gsl_complex_rect(0,1);
 	gsl_complex zero = gsl_complex_rect(0,0);
 
 	dstep = (dend-dstart)/dlen;
 
-	A = gsl_vector_complex_alloc (2);
-	P = gsl_matrix_complex_alloc (2,2);
+	//allocate storage
+	gsl_vector_complex * A = gsl_vector_complex_alloc (2);
+	gsl_matrix_complex * P = gsl_matrix_complex_alloc (2,2);
 
 	gsl_matrix_complex * Comp = gsl_matrix_complex_alloc (2,2);
 	gsl_matrix_complex * Sample = gsl_matrix_complex_alloc (2,2);
@@ -38,15 +34,18 @@ void DLC::Michel_levy(double Dn, int dlen, int dstart, int dend, gsl_matrix * Xm
 
 	gsl_complex Tx, Ty;
 
-	gsl_vector_complex_set(A,0,zero);
+	//set analyser
+	gsl_vector_complex_set(A,0,zero);	
 	gsl_vector_complex_set(A,1,one);
 
+	//set polariser
 	gsl_matrix_complex_set(P,0,0,one);	
 	gsl_matrix_complex_set(P,0,1,zero);
 	gsl_matrix_complex_set(P,1,0,zero);
 	gsl_matrix_complex_set(P,1,1,zero);
 
-	gsl_vector * d = gsl_vector_alloc (dlen);
+	//allocate storage
+	gsl_vector * d = gsl_vector_alloc (dlen);	
 	gsl_vector * lambda = gsl_vector_alloc (len);
 	gsl_vector * rho = gsl_vector_alloc (ypix);
 
@@ -59,17 +58,20 @@ void DLC::Michel_levy(double Dn, int dlen, int dstart, int dend, gsl_matrix * Xm
 	gsl_vector * XYZ = gsl_vector_alloc (3);
 	gsl_vector * RGB = gsl_vector_alloc (3);
 
-	for(i=0;i<dlen;i++)
+	//precalculate values for d
+	for(i=0;i<dlen;i++)		
 	{
 		gsl_vector_set(d,i,dstart+i*dstep);	
 	}
-
-	for(i=0;i<len;i++)
+	
+	//precalculate values for lambda
+	for(i=0;i<len;i++)				
 	{
 		gsl_vector_set(lambda,i,360+i);
 	}
 
-	for(i=0;i<ypix;i++)
+	//precalculate values for rho
+	for(i=0;i<ypix;i++)				
 	{
 		gsl_vector_set(rho,i,(-1*rho_max)+rhostep*i);
 	}
@@ -84,6 +86,7 @@ void DLC::Michel_levy(double Dn, int dlen, int dstart, int dend, gsl_matrix * Xm
 	FILE * fym = fopen("ym.txt", "r");
 	FILE * fzm = fopen("zm.txt", "r");
 
+	//read file data
 	gsl_vector_fscanf(fxm,xm);
 	gsl_vector_fscanf(fym,ym);
 	gsl_vector_fscanf(fzm,zm);
@@ -131,25 +134,25 @@ void DLC::Michel_levy(double Dn, int dlen, int dstart, int dend, gsl_matrix * Xm
 					gsl_matrix_complex_set(Sample,1,0,sample_c[2]);
 					gsl_matrix_complex_set(Sample,1,1,sample_c[3]);
 
-				//matrix manipulations
-				//%E = P*Sample*A;
+			//matrix manipulations
+			//	%E = P*Sample*A;
             		//	E = P*Sample*Reflec*Sample*A;   
             		//	Ts = E'*E;  careful with complex conj in C++
             		//	T(l) = Ts; % generate the spectra 
 
-				gsl_blas_zgemm(CblasNoTrans,CblasNoTrans,one,P,Sample,zero,TempA);   // TempA = P*Sample
-				gsl_blas_zgemm(CblasNoTrans,CblasNoTrans,one,TempA,Comp,zero,TempB);  // TempB = TempA*Comp
-				gsl_blas_zgemv(CblasNoTrans,one,TempB,A,zero,E);		     // E = TempB*A
+			gsl_blas_zgemm(CblasNoTrans,CblasNoTrans,one,P,Sample,zero,TempA);   // TempA = P*Sample
+			gsl_blas_zgemm(CblasNoTrans,CblasNoTrans,one,TempA,Comp,zero,TempB);  // TempB = TempA*Comp
+			gsl_blas_zgemv(CblasNoTrans,one,TempB,A,zero,E);		     // E = TempB*A
 
 	Ts = gsl_complex_abs2(gsl_vector_complex_get(E,0))+gsl_complex_abs2(gsl_vector_complex_get(E,1)); 
 
-					xmi = gsl_vector_get(xm,l);	
-					ymi = gsl_vector_get(ym,l);
-					zmi = gsl_vector_get(zm,l);
+				xmi = gsl_vector_get(xm,l);	
+				ymi = gsl_vector_get(ym,l);
+				zmi = gsl_vector_get(zm,l);
 
-					gsl_vector_set(Xr,l,xmi*Ts);
-					gsl_vector_set(Yr,l,ymi*Ts);
-					gsl_vector_set(Zr,l,zmi*Ts);
+				gsl_vector_set(Xr,l,xmi*Ts);
+				gsl_vector_set(Yr,l,ymi*Ts);
+				gsl_vector_set(Zr,l,zmi*Ts);
 				}
 
 			//trapezium method - step is 1nm
@@ -209,8 +212,6 @@ void DLC::Michel_levy(double Dn, int dlen, int dstart, int dend, gsl_matrix * Xm
 void DLC::XYZ2RGB(gsl_vector * RGB, gsl_vector * XYZ)
 {
 	// http://www.easyrgb.com/
-	//replace with matrix vector multiplication
-	
 	double var_R, var_G, var_B;
 
 	gsl_matrix * T = gsl_matrix_alloc (3,3);
