@@ -162,19 +162,17 @@ void DLC::Michel_levy(double Dn, int ypix, int dstart, int dend, int dlen, gsl_m
         		Yn = Y/Norm;
         		Zn = Z/Norm;
 
-			gsl_vector_set(XYZ,0,Xn);
-			gsl_vector_set(XYZ,1,Yn);
-			gsl_vector_set(XYZ,2,Zn);
-
+			//gsl_vector_set(XYZ,0,Xn);
+			//gsl_vector_set(XYZ,1,Yn);
+			//gsl_vector_set(XYZ,2,Zn);
 			//XYZ2RGB(RGB,XYZ); // convert to RGB
-
 			//R = gsl_vector_get(RGB,0);
 			//G = gsl_vector_get(RGB,1);
 			//B = gsl_vector_get(RGB,2);
 		
-			gsl_matrix_set(Xmat,dc,rhol,Xn); // changed from RGB
-			gsl_matrix_set(Ymat,dc,rhol,Yn);
-			gsl_matrix_set(Zmat,dc,rhol,Zn);
+			gsl_matrix_set(Xmat,dc,rhol,X); // changed from RGB to XYZ
+			gsl_matrix_set(Ymat,dc,rhol,Y);
+			gsl_matrix_set(Zmat,dc,rhol,Z);
 		}	
 	}
 	
