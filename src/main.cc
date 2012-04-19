@@ -38,14 +38,20 @@ int main(int argc, char* argv[]) {
 			
 			img.set_linear_atXY(X,dcm,ypm,0,0,false);
 			img.set_linear_atXY(Y,dcm,ypm,0,1,false);
-			img.set_linear_atXY(Z,dcm,ypm,0,2,false);
+			img.set_linear_atXY(Z,dcm,ypm,0,2,false);		
 		}
 	}
+
+	img.XYZtoRGB();
 
 	CImgDisplay main_disp(img, "Michel Levy Chromatic Scale");
 	while (!main_disp.is_closed()) {
       		main_disp.wait();
 	}
+
+	//save file
+
+	img.save_tiff("10_5000_dn0p12.tif");
 	
 
 	gsl_matrix_free(Xmat);
