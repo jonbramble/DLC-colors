@@ -170,9 +170,9 @@ void DLC::Michel_levy(double Dn, int ypix, int dstart, int dend, int dlen, gsl_m
 			//G = gsl_vector_get(RGB,1);
 			//B = gsl_vector_get(RGB,2);
 		
-			gsl_matrix_set(Xmat,dc,rhol,X); // changed from RGB to XYZ
-			gsl_matrix_set(Ymat,dc,rhol,Y);
-			gsl_matrix_set(Zmat,dc,rhol,Z);
+			gsl_matrix_set(Xmat,dc,rhol,Xn); // changed from RGB to XYZ
+			gsl_matrix_set(Ymat,dc,rhol,Yn);
+			gsl_matrix_set(Zmat,dc,rhol,Zn);
 		}	
 	}
 	
