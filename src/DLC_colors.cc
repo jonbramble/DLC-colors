@@ -13,7 +13,7 @@ void DLC::Michel_levy(double Dn, int ypix, int dstart, int dend, int dlen, gsl_m
 	gsl_complex zero = gsl_complex_rect(0,0);
 
 	dstep = (dend-dstart)/dlen;
-
+	
 	//allocate storage
 	gsl_vector_complex * A = gsl_vector_complex_alloc (2);
 	gsl_matrix_complex * P = gsl_matrix_complex_alloc (2,2);
@@ -54,10 +54,16 @@ void DLC::Michel_levy(double Dn, int ypix, int dstart, int dend, int dlen, gsl_m
 	gsl_vector * XYZ = gsl_vector_alloc (3);
 	gsl_vector * RGB = gsl_vector_alloc (3);
 
+	// load cie data
+  	gsl_vector * xm = gsl_vector_alloc (len);
+	gsl_vector * ym = gsl_vector_alloc (len);
+	gsl_vector * zm = gsl_vector_alloc (len);
+
 	//precalculate values for d
 	for(i=0;i<dlen;i++)		
 	{
 		gsl_vector_set(d,i,dstart+i*dstep);	
+		//std::cout << dstart+i*dstep << std::endl;
 	}
 	
 	//precalculate values for lambda
@@ -72,11 +78,6 @@ void DLC::Michel_levy(double Dn, int ypix, int dstart, int dend, int dlen, gsl_m
 		gsl_vector_set(rho,i,(-1*rho_max)+rhostep*i);
 	}
 
-	// load cie data
-  	gsl_vector * xm = gsl_vector_alloc (len);
-	gsl_vector * ym = gsl_vector_alloc (len);
-	gsl_vector * zm = gsl_vector_alloc (len);
-  
 	//should check these are present
 	FILE * fxm = fopen("xm.txt", "r");
 	FILE * fym = fopen("ym.txt", "r");
