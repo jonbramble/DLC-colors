@@ -17,7 +17,8 @@ int main(int argc, char* argv[]) {
 	
 	DLCPlot *Plot = new DLCPlot();
 	//Plot->Plot_Full(Dn,dlen,dstart,dend,ypix);
-        Plot->Plot_Bar(Dn,d,xpix,ypix);
+        //Plot->Plot_Bar(Dn,d,xpix,ypix);
+	Plot->Plot_Arc(Dn,d,10,10);
 
 	return 0;
 }
