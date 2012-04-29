@@ -45,7 +45,7 @@ void DLCPlot::Plot_Bar(double Dn, int d, int xpix, int ypix )
 void DLCPlot::Plot_Arc(double Dn, int d, int xpix, int ypix)
 {
 	DLC *data = new DLC();	
-	// xpix and ypix are now swapped, we are plotting the change in angle on x, no change in y
+
 	gsl_matrix * Xmat = gsl_matrix_alloc (1,xpix);
 	gsl_matrix * Ymat = gsl_matrix_alloc (1,xpix);
 	gsl_matrix * Zmat = gsl_matrix_alloc (1,xpix);
@@ -55,47 +55,51 @@ void DLCPlot::Plot_Arc(double Dn, int d, int xpix, int ypix)
 
         data->Michel_levy(Dn,xpix,d,d,1,Xmat,Ymat,Zmat);
 
-
-	CImg<float> img(xpix,ypix,1,3);
-
 	// tricky bit goes here
-
 	// co-ords of elements on arc
 
 	int rpm;
 	double x,y;
-	const int rin = 150;
-	const int rout = 175;
+	const int offset = 25;
+	const int rin = 200;
+	const int rout = 225;
 
 	int xlim = (int)round(rout*0.707106781);
 
-	std::cout << xlim << std::endl;
+	CImg<float> img(2*rout,(rout/2)+offset,1,3);
 
 	double rho_max = M_PI/4;	// we rotate by 45 each way
 	double rhostep = (2*rho_max)/(double)xpix; // in steps of xpix
 
-	for(rpm=rin;rpm<rin+2;rpm++)
+	for(rpm=rin;rpm<rout;rpm++)
 	{
-		for(xpm=0;xpm<xpix/2;xpm++)
+		for(xpm=0;xpm<xpix;xpm++)
 		{
-			x = rpm*cos((rho_max)+rhostep*xpm); 
-			y = rpm*sin((rho_max)+rhostep*xpm); 
-			std::cout << x << "," << y << std::endl;
+			x = rout+rpm*sin((-1*rho_max)+rhostep*xpm); 
+			y = rpm*cos((-1*rho_max)+rhostep*xpm); 
+			//std::cout << x << "," << y << std::endl;
+
+			X = (float) gsl_matrix_get(Xmat,0,xpm);
+			Y = (float) gsl_matrix_get(Ymat,0,xpm);
+		        Z = (float) gsl_matrix_get(Zmat,0,xpm);
+
+			img.set_linear_atXY(X,x,rout+offset-y,0,0,false);
+			img.set_linear_atXY(Y,x,rout+offset-y,0,1,false);
+			img.set_linear_atXY(Z,x,rout+offset-y,0,2,false);	
 		}
 	}
-
 
 	gsl_matrix_free(Xmat);
 	gsl_matrix_free(Ymat);
 	gsl_matrix_free(Zmat); 
 
-      /*  img.XYZtoRGB();
+       img.XYZtoRGB();
 
 	CImgDisplay main_disp(img, "Michel Levy Chromatic Scale");
 	while (!main_disp.is_closed()) {
       		main_disp.wait();
 	}
-*/
+
  
 }
 

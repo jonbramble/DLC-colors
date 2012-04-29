@@ -13,12 +13,12 @@ int main(int argc, char* argv[]) {
 	int dend = 5000;
 	int ypix = 250;
         int xpix = 750;
-        int d = 3000;
+        int d = 500;
 	
 	DLCPlot *Plot = new DLCPlot();
 	//Plot->Plot_Full(Dn,dlen,dstart,dend,ypix);
         //Plot->Plot_Bar(Dn,d,xpix,ypix);
-	Plot->Plot_Arc(Dn,d,10,10);
+	Plot->Plot_Arc(Dn,d,750,10);
 
 	return 0;
 }
