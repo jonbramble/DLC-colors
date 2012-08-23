@@ -1,5 +1,7 @@
 #include "../include/DLC_plot.h"
 
+void DLCPlot::Plot_SimpleChart(Dn,double Dn, int dlen, int dstart, int dend, int ypix )
+
 void DLCPlot::Plot_Bar(double Dn, int d, int xpix, int ypix )
 {
 	DLC *data = new DLC();	
@@ -40,6 +42,10 @@ void DLCPlot::Plot_Bar(double Dn, int d, int xpix, int ypix )
       		main_disp.wait();
 	}
 
+	img.save_tiff("bar_d1200_dn0p12.tif");
+
+	delete data;
+
 }
 
 void DLCPlot::Plot_Arc(double Dn, int d, int xpix, int ypix)
@@ -67,6 +73,7 @@ void DLCPlot::Plot_Arc(double Dn, int d, int xpix, int ypix)
 	int xlim = (int)round(rout*0.707106781);
 
 	CImg<float> img(2*rout,(rout/2)+offset,1,3);
+	//img.fillC(
 
 	double rho_max = M_PI/4;	// we rotate by 45 each way
 	double rhostep = (2*rho_max)/(double)xpix; // in steps of xpix
@@ -93,14 +100,16 @@ void DLCPlot::Plot_Arc(double Dn, int d, int xpix, int ypix)
 	gsl_matrix_free(Ymat);
 	gsl_matrix_free(Zmat); 
 
-       img.XYZtoRGB();
+        img.XYZtoRGB();
 
 	CImgDisplay main_disp(img, "Michel Levy Chromatic Scale");
 	while (!main_disp.is_closed()) {
       		main_disp.wait();
 	}
 
- 
+	img.save_tiff("arc_d1200_dn0p12.tif");
+
+ 	delete data;
 }
 
 void DLCPlot::Plot_Full(double Dn, int dlen, int dstart, int dend, int ypix )
@@ -145,5 +154,8 @@ void DLCPlot::Plot_Full(double Dn, int dlen, int dstart, int dend, int ypix )
 
 	//save file
 	img.save_tiff("10_5000_dn0p12.tif");
+
+
+	delete data;
 }
 
