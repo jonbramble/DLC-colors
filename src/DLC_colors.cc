@@ -92,7 +92,7 @@ void DLC::Michel_levy(double Dn, int ypix, int dstart, int dend, int dlen, bool 
 
 
     //should check these are present
-    std::cout << "Loading color data ...." << std::endl;
+    std::cout << "Loading color data ....";
     FILE * fxm = fopen("xm.txt", "r");
     FILE * fym = fopen("ym.txt", "r");
     FILE * fzm = fopen("zm.txt", "r");
@@ -106,7 +106,7 @@ void DLC::Michel_levy(double Dn, int ypix, int dstart, int dend, int dlen, bool 
     fclose(fym);
     fclose(fzm);
     // end of file loading
-    std::cout << "... complete" << std::endl;
+    std::cout << "complete" << std::endl;
 
     for (rhol=0;rhol<ypix;rhol++)
     {
@@ -204,6 +204,10 @@ void DLC::Michel_levy(double Dn, int ypix, int dstart, int dend, int dlen, bool 
             gsl_matrix_set(Xmat,dc,rhol,Xn); // changed from RGB to XYZ
             gsl_matrix_set(Ymat,dc,rhol,Yn);
             gsl_matrix_set(Zmat,dc,rhol,Zn);
+
+	    //gsl_matrix_set(Xmat,dc,rhol,R); // changed from XYZ to RGB
+            //gsl_matrix_set(Ymat,dc,rhol,G);
+            //gsl_matrix_set(Zmat,dc,rhol,B);
         }
     }
 

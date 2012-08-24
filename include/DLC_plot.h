@@ -9,11 +9,10 @@ using namespace cimg_library;
 class DLCPlot 
 {
 public:
- void Plot_Bar(double Dn, int d, int xpix, int ypix);
- void Plot_Arc(double Dn, int d, int xpix, int ypix); // this will change to include r
- void Plot_Full(double Dn, int dstart, int dend, int dlen, int ypix);
- void Plot_SimpleChart(double Dn, int dstart, int dend, int dlen, int ypix );
-
+ void Plot_Bar(const double Dn,const int d,const int xpix,const int ypix,const bool inccomp);
+ void Plot_Arc(const double Dn,const int d,const int xpix,const int ypix,const bool inccomp);
+ void Plot_Full(const double Dn,const int dstart,const int dend,const int dlen,const int ypix,const bool inccomp);
+ void Plot_SimpleChart(const double Dn,const int dstart,const int dend,const int dlen,const int ypix,const bool inccomp);
 };
 
 #endif
