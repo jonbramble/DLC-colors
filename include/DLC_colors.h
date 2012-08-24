@@ -19,7 +19,7 @@
 class DLC
 {
 public:
-    void Michel_levy(double,int,int,int,int,gsl_matrix*,gsl_matrix*,gsl_matrix*);
+    void Michel_levy(double,int,int,int,int,bool,gsl_matrix*,gsl_matrix*,gsl_matrix*);
 	
 private:
     static void XYZ2RGB(gsl_vector*, gsl_vector*);
