@@ -4,3 +4,4 @@ src/*.o
 DLC_colors
 *~
 *.log
+*.tif
